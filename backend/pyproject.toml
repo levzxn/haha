@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fast-zero"
+version = "0.1.0"
+description = ""
+authors = ["Lucas4i20 <127855437+Lucas4i20@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+pydantic-settings = "^2.3.4"
+pyjwt = "^2.8.0"
+pwdlib = {extras = ["argon2"], version = "^0.2.0"}
+tortoise-orm = "^0.21.5"
+uvicorn = "^0.31.0"
+python-multipart = "^0.0.12"
+tzdata = "^2024.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
