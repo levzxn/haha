@@ -23,6 +23,13 @@ async def upload_file(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
     
     # Supondo que 'Document' seja um modelo e você está criando um registro no banco
-    document = Document.create(file_path=file_path)
+    document = Document(file_path=file_path)
+    await document.save()
     
     return {'doc': file.filename}
+
+@router.get('/{doc_name}',status_code=HTTPStatus.OK)
+def get_document_content(doc_name:str):
+    document = Document.get(file_name=doc_name)
+    with open(document.file_path,'r') as stored_file:
+        return {'content':stored_file.readlines()}

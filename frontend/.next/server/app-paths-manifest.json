@@ -1,5 +1,5 @@
 {
   "/page": "app/page.js",
-  "/logado/page": "app/logado/page.js",
-  "/logado/upload/page": "app/logado/upload/page.js"
+  "/logado/upload/page": "app/logado/upload/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
