@@ -8,7 +8,7 @@ from fast_zero.models import Document
 router = APIRouter(prefix='/docs',tags=['docs'])
 
 
-UPLOAD_DIR = "uploads/"
+UPLOAD_DIR = "fast_zero/uploads/"
 
 @router.post("/uploadfile/", status_code=HTTPStatus.OK)
 async def upload_file(file: UploadFile = File(...)):
