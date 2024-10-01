@@ -2,23 +2,25 @@ import { NextResponse } from 'next/server'
 
 export function middleware(request) {
     const token = request.cookies.get('auth-token')?.value
-    const loginURL = new URL('/', request.url)
+    const { pathname } = request.nextUrl;
+    
+    const loginURL = new URL('/', request.url);
     const logadoURL = new URL('/logado', request.url)
-    const registroURL = new URL('/registrar', request.url)
-    if (!token){
-        if(request.nextUrl.pathname === '/registrar' || request.nextUrl.pathname === '/'){
-            return NextResponse.next()
-        }
+
+    const pathPublico = pathname === '/' || pathname === '/registrar'
+
+    if (!token && !pathPublico) {
         return NextResponse.redirect(loginURL)
     }
-    if (request.nextUrl.pathname === '/'){
+
+    if (token && pathPublico) {
         return NextResponse.redirect(logadoURL)
     }
-    if (request.nextUrl.pathname === '/registrar'){
-        return NextResponse.redirect(logadoURL)
-    }
+
+    return NextResponse.next()
 }
 
 export const config = {
-    matcher: ['/', '/logado', '/registrar']
-}
+    matcher: ['/', '/logado/:path*', '/registrar']
+};
+

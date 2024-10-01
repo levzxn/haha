@@ -42,6 +42,9 @@ export default function logado() {
         Cookies.remove('auth-token')
         router.push('/')
     }
+    function irParaUpload(){
+        router.push('/logado/upload')
+    }
     return (
         <div>
             {dadosUsuario ?
@@ -53,6 +56,7 @@ export default function logado() {
              :
              <p>Carregando dados do usuário...</p>
             }
+            <button onClick={irParaUpload}>ir para Upload</button>
         </div>
     );
 }
