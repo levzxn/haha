@@ -11,3 +11,7 @@ class User(Model):
 
     def __str__(self):
         return self.username
+
+class Document(Model):
+    id = fields.IntField(primary_key=True)
+    file_path = fields.CharField(max_length=255)

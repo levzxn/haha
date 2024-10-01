@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from fast_zero.routers import users,auth
+from fast_zero.routers import users,auth,docs
 from tortoise.contrib.fastapi import register_tortoise
 
 
@@ -18,6 +18,7 @@ app.add_middleware(
 
 app.include_router(users.router)
 app.include_router(auth.router)
+app.include_router(docs.router)
 
 register_tortoise(
     app,
