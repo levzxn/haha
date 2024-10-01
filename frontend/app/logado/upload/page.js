@@ -3,6 +3,7 @@ export default function Upload() {
     async function enviarArquivo(evento) {
         evento.preventDefault()
         const dadosFormulario = new FormData(evento.target)
+        console.log(dadosFormulario)
         const conexao = await fetch('http://localhost:8000/docs/uploadfile', {
             method: 'POST',
             body: dadosFormulario 

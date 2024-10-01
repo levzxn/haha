@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/logado/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/logado/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,10 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/logado/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/logado/page.js"
+      "static/chunks/app/page.js"
+    ],
+    "/registrar/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/registrar/page.js"
     ],
     "/logado/upload/page": [
       "static/chunks/webpack.js",
