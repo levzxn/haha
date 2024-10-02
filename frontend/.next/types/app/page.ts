@@ -1,4 +1,4 @@
-// File: C:\Users\lucas\Documents\GitHub\login-fastapi-nextjs\frontend\app\page.js
+// File: C:\Users\levi\Documents\GitHub\login-fastapi-nextjs\frontend\app\page.js
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
