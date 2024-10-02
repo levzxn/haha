@@ -1,11 +1,6 @@
 {
-  "/logado/page": "app/logado/page.js",
-  "/registrar/page": "app/registrar/page.js",
   "/page": "app/page.js",
-<<<<<<< HEAD
-  "/registrar/page": "app/registrar/page.js",
-=======
-  "/favicon.ico/route": "app/favicon.ico/route.js",
->>>>>>> d992d6c2b706aa7a3f5ff1a974be0303738aac64
-  "/logado/upload/page": "app/logado/upload/page.js"
+  "/logado/page": "app/logado/page.js",
+  "/logado/upload/page": "app/logado/upload/page.js",
+  "/registrar/page": "app/registrar/page.js"
 }
