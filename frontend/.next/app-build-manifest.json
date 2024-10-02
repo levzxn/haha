@@ -1,9 +1,16 @@
 {
   "pages": {
+<<<<<<< HEAD
     "/logado/upload/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/logado/upload/page.js"
+=======
+    "/logado/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/logado/page.js"
+>>>>>>> 45c6352d81c5b0415c92e6188c3c8ef6c4f5f25b
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,10 +18,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+<<<<<<< HEAD
     "/logado/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/logado/page.js"
+=======
+    "/logado/upload/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/logado/upload/page.js"
+>>>>>>> 45c6352d81c5b0415c92e6188c3c8ef6c4f5f25b
     ],
     "/page": [
       "static/chunks/webpack.js",
