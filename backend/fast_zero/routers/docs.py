@@ -11,7 +11,7 @@ router = APIRouter(prefix='/docs',tags=['docs'])
 UPLOAD_DIR = "fast_zero/uploads/"
 
 @router.post("/uploadfile/", status_code=HTTPStatus.OK)
-async def upload_file(titulo:str=Form(...),file: UploadFile = File(...)):
+async def upload_file(titulo:str=Form(...),file: UploadFile = File(...),current_user: User = Depends(get_current_user)):
     if not os.path.exists(UPLOAD_DIR):
         os.makedirs(UPLOAD_DIR)
     
@@ -20,7 +20,7 @@ async def upload_file(titulo:str=Form(...),file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    document = Document(file_name=titulo,file_path=file_path)
+    document = Document(file_name=titulo,file_path=file_path,sender=current_user)
     await document.save()
     
     return {'doc': file.filename}
