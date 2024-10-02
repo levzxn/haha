@@ -1,3 +1,9 @@
 {
+<<<<<<< HEAD
+=======
+  "/logado/page": "app/logado/page.js",
+  "/page": "app/page.js",
+  "/registrar/page": "app/registrar/page.js",
+>>>>>>> a4a4e634b474307fc60d94555f54cecb083a947e
   "/logado/upload/page": "app/logado/upload/page.js"
 }
