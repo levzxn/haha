@@ -57,5 +57,4 @@ instance/
 *.sqlite
 
 # Arquivos gerados para pacotes npm e yarn
-package-lock.json
 yarn.lock
