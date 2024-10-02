@@ -1,7 +1,8 @@
 from fastapi.routing import APIRouter
-from fastapi import UploadFile,File,Form
+from fastapi import UploadFile,File,Form,Depends
 from http import HTTPStatus 
-from fast_zero.models import Document
+from fast_zero.models import Document,User
+from fast_zero.security import get_current_user
 import os,shutil,base64
 
 router = APIRouter(prefix='/docs',tags=['docs'])
@@ -32,3 +33,8 @@ async def get_document_content(doc_name:str):
         encoded_content = base64.b64encode(content).decode("utf-8")
         return {'content':encoded_content}
         
+
+@router.get('/all/',status_code=HTTPStatus.ACCEPTED)
+async def get_all_user_documents(user_id:int,current_user: User = Depends(get_current_user)):
+    documents = Document.filter(user=current_user)
+    return {'documents':documents}
