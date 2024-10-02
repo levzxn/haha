@@ -1,9 +1,8 @@
 from fastapi.routing import APIRouter
 from fastapi import UploadFile,File,Form
-import os
-from http import HTTPStatus
-import shutil
+from http import HTTPStatus 
 from fast_zero.models import Document
+import os,shutil,base64
 
 router = APIRouter(prefix='/docs',tags=['docs'])
 
@@ -30,5 +29,6 @@ async def get_document_content(doc_name:str):
     document = await Document.get(file_name=doc_name)
     with open(document.file_path,'rb') as stored_file:
         content = stored_file.read()
-        return {'content':content}
+        encoded_content = base64.b64encode(content).decode("utf-8")
+        return {'content':encoded_content}
         
