@@ -1,6 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/logado/page": "app/logado/page.js",
-  "/logado/upload/page": "app/logado/upload/page.js",
-  "/registrar/page": "app/registrar/page.js"
+  "/logado/upload/page": "app/logado/upload/page.js"
 }

@@ -32,11 +32,7 @@ export default function Upload() {
             }
 
             const dados = await conexao.json()
-            const endpointDados = await fetch(`http://localhost:8000/docs/${dados.doc}/`,{
-                method:'GET'
-            })
-            const dadosJson = await endpointDados.json()
-            setDadosArquivo(dadosJson)
+
         } catch (error) {
             setErroCarregamento('Falha no upload do arquivo: ' + error.message)
         } finally {

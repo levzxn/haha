@@ -36,5 +36,5 @@ async def get_document_content(doc_name:str):
 
 @router.get('/all/',status_code=HTTPStatus.ACCEPTED)
 async def get_all_user_documents(user_id:int,current_user: User = Depends(get_current_user)):
-    documents = Document.filter(user=current_user)
+    documents = Document.filter(sender=current_user)
     return {'documents':documents}
