@@ -3,7 +3,9 @@ from fastapi import UploadFile,File,Form,Depends
 from http import HTTPStatus 
 from fast_zero.models import Document,User
 from fast_zero.security import get_current_user
+from fast_zero.response_models import ResponseDoc
 import os,shutil,base64
+from typing import List
 
 router = APIRouter(prefix='/docs',tags=['docs'])
 
@@ -37,6 +39,6 @@ async def get_document_content(doc_name:str):
 @router.get('/all/',status_code=HTTPStatus.ACCEPTED)
 async def get_all_user_documents(current_user: User = Depends(get_current_user)):
     documents = await Document.filter(sender=current_user)
-    return {'documents':documents}
+    return documents
 
 
