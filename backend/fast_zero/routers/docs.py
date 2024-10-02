@@ -17,7 +17,7 @@ async def upload_file(titulo:str=Form(...),file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     
     with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        buffer.write(await file.read()) 
     
     document = Document(file_name=titulo,file_path=file_path)
     await document.save()
