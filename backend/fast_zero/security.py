@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 
 SECRET_KEY = '424-234-542'
 ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 1
+ACCESS_TOKEN_EXPIRE_MINUTES = 10
 pwd_context = PasswordHash.recommended()
 
 

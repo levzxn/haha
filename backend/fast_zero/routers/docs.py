@@ -27,13 +27,13 @@ async def upload_file(titulo:str=Form(...),file: UploadFile = File(...),current_
     
     return {'doc': file.filename}
 
-'''@router.get('/{doc_name}/',status_code=HTTPStatus.OK)
-async def get_document_content(doc_name:str):
-    document = await Document.get(file_name=doc_name)
+@router.get('/file/{doc_id}/',status_code=HTTPStatus.OK)
+async def get_document_content(doc_id:int):
+    document = await Document.get(id=doc_id)
     with open(document.file_path,'rb') as stored_file:
         content = stored_file.read()
         encoded_content = base64.b64encode(content).decode("utf-8")
-        return {'content':encoded_content}'''
+        return {'content':encoded_content}
         
 
 @router.get('/all/',status_code=HTTPStatus.ACCEPTED)
