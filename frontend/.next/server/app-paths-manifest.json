@@ -1,1 +1,5 @@
-{}
+{
+  "/logado/page": "app/logado/page.js",
+  "/logado/upload/page": "app/logado/upload/page.js",
+  "/page": "app/page.js"
+}

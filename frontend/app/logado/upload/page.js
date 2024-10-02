@@ -39,7 +39,7 @@ export default function Upload() {
             setCarregando(false)
         }
     }
-
+/*
     useEffect(() => {
         if (dadosArquivo) {
             function decodificarArquivoBase64() {
@@ -58,7 +58,7 @@ export default function Upload() {
         
         }
     }, [dadosArquivo])
-
+*/
     useEffect(() =>{
         async function documentosDeUmUsuario(){
             const getDocumentos = await fetch('http://localhost:8000/docs/all',{
