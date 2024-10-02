@@ -1,4 +1,4 @@
-// File: D:\Scripts\Projeto DOU\login-fastapi-nextjs\frontend\app\logado\upload\page.js
+// File: C:\Users\lucas\Documents\GitHub\login-fastapi-nextjs\frontend\app\logado\upload\page.js
 import * as entry from '../../../../../app/logado/upload/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

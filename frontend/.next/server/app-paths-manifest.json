@@ -1,5 +1,6 @@
 {
   "/page": "app/page.js",
   "/logado/upload/page": "app/logado/upload/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/registrar/page": "app/registrar/page.js"
 }

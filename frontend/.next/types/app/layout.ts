@@ -1,4 +1,4 @@
-// File: D:\Scripts\Projeto DOU\login-fastapi-nextjs\frontend\app\layout.js
+// File: C:\Users\lucas\Documents\GitHub\login-fastapi-nextjs\frontend\app\layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
