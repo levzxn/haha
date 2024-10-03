@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 from fastapi import HTTPException,Depends
-from fast_zero.schemas import UserSchema
+from fast_zero.schemas import UserIn,UserOut
 from fast_zero.models import User
 from fast_zero.security import get_password_hash,get_current_user
 from http import HTTPStatus
@@ -9,12 +9,12 @@ from tortoise.expressions import Q
 
 router = APIRouter(prefix='/user',tags=['user'])
 
-@router.get('/me',status_code=HTTPStatus.OK)
+@router.get('/me',status_code=HTTPStatus.OK,response_model=UserOut)
 async def get_nomes(current_user: User = Depends(get_current_user)):
     return current_user
 
 @router.post('/',status_code=HTTPStatus.CREATED)
-async def create_user(user:UserSchema):
+async def create_user(user:UserIn):
         try:
             db_user = await User.get(Q(username=user.username) | Q(email=user.email))
             
@@ -35,8 +35,8 @@ async def create_user(user:UserSchema):
                     detail="Email adress alredy exists"
                 )
 
-@router.put('/{user_id}',status_code=HTTPStatus.OK)
-async def update_user(user_id:int,updated_user:UserSchema,current_user: User = Depends(get_current_user)):
+@router.put('/{user_id}',status_code=HTTPStatus.OK,response_model=UserOut)
+async def update_user(user_id:int,updated_user:UserIn,current_user: User = Depends(get_current_user)):
     if current_user.id != user_id:
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions'
