@@ -5,12 +5,15 @@ from fast_zero.models import User
 from fast_zero.security import get_password_hash,get_current_user
 from http import HTTPStatus
 from tortoise.expressions import Q
+from typing import Annotated
 
 
 router = APIRouter(prefix='/user',tags=['user'])
 
+T_User = Annotated[User,Depends(get_current_user)]
+
 @router.get('/me',status_code=HTTPStatus.OK,response_model=UserOut)
-async def get_nomes(current_user: User = Depends(get_current_user)):
+async def get_nomes(current_user: T_User):
     return current_user
 
 @router.post('/',status_code=HTTPStatus.CREATED)
@@ -36,7 +39,7 @@ async def create_user(user:UserIn):
                 )
 
 @router.put('/{user_id}',status_code=HTTPStatus.OK,response_model=UserOut)
-async def update_user(user_id:int,updated_user:UserIn,current_user: User = Depends(get_current_user)):
+async def update_user(user_id:int,updated_user:UserIn,current_user: T_User):
     if current_user.id != user_id:
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions'
@@ -48,7 +51,7 @@ async def update_user(user_id:int,updated_user:UserIn,current_user: User = Depen
     return current_user
 
 @router.delete('/{user_id}',status_code=HTTPStatus.OK)
-async def delete_user(user_id:int,current_user: User = Depends(get_current_user)) :
+async def delete_user(user_id:int,current_user: T_User) :
     if current_user.id != user_id:
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions'

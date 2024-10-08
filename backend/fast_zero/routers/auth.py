@@ -4,11 +4,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fast_zero.models import User
 from fast_zero.security import verify_password,create_acess_token
 from http import HTTPStatus
+from typing import Annotated
 
 router = APIRouter(prefix='/auth',tags=['auth'])
 
+T_OAuth = Annotated[OAuth2PasswordRequestForm,Depends()]
+
 @router.post('/token',status_code=HTTPStatus.OK)
-async def get_token(form_data: OAuth2PasswordRequestForm = Depends()):
+async def get_token(form_data: T_OAuth):
     try:
         db_user = await User.get(username=form_data.username)
     except:       

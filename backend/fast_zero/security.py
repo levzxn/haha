@@ -7,6 +7,7 @@ from fast_zero.schemas import TokenData
 from http import HTTPStatus
 from datetime import datetime,timedelta
 from zoneinfo import ZoneInfo
+from typing import Annotated
 
 SECRET_KEY = '424-234-542'
 ALGORITHM = 'HS256'
@@ -31,7 +32,9 @@ def create_acess_token(data:dict):
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-async def get_current_user(token:str=Depends(oauth2_scheme)):
+T_token = Annotated[str,Depends(oauth2_scheme)]
+
+async def get_current_user(token:T_token):
     credentials_exception = HTTPException(
         status_code=HTTPStatus.UNAUTHORIZED,
         detail='Could not validate credentials',

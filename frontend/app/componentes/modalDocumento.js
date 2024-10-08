@@ -10,6 +10,7 @@ export default function ModalDocumento({ dados, fecharModal }) {
                 const conteudoJson = await conteudoConexao.json();
                 const conteudoDecodificado = atob(conteudoJson.content);
                 
+                console.log(conteudoJson.content)
                 const byteNumbers = new Uint8Array(conteudoDecodificado.length);
                 for (let i = 0; i < conteudoDecodificado.length; i++) {
                     byteNumbers[i] = conteudoDecodificado.charCodeAt(i);
