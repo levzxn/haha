@@ -53,13 +53,15 @@ async def get_all_user_documents(current_user: User = Depends(get_current_user))
 
 @router.get('/gerar_diario/')
 async def gerar_diario(doc_ids:List[int]=Query(...)):
-    print('hi')
-    documents = [await Document.get(id=id) for id in doc_ids]
-
-    create_pdf([document.file_path for document in documents],'TesteDOC.pdf')
-  
-'''    #except:
+    try:
+        documents = [await Document.get(id=id) for id in doc_ids]
+        create_pdf([document.file_path for document in documents],'TesteDOC.pdf')
+        with open('TesteDoc.pdf','rb') as stored_file:
+                content = stored_file.read()
+                encoded_content = base64.b64encode(content).decode("utf-8")
+                return {'content':encoded_content}
+    except:
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
             detail='ID de documento não encontrado'
-        )'''
+        )
