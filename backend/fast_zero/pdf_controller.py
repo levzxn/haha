@@ -15,7 +15,7 @@ def extract_paragraphs_from_docx(docx_file):
 
 pdfmetrics.registerFont(TTFont('Calibri', 'Calibri.ttf'))
 
-def create_pdf(pdf_paths, output_pdf):
+def create_pdf(doc_paths, output_pdf):
     doc = BaseDocTemplate(output_pdf, pagesize=A4)
     styles = getSampleStyleSheet()
 
@@ -65,10 +65,8 @@ def create_pdf(pdf_paths, output_pdf):
 
     story = []
 
-    # Processar cada PDF e gerar o conteúdo classificado
-    for pdf_path in pdf_paths:
-        docx_file = 'documento_exemplo.docx'  # O caminho para o seu arquivo DOCX
-        paragraphs = extract_paragraphs_from_docx(pdf_path)
+    for doc_path in doc_paths:
+        paragraphs = extract_paragraphs_from_docx(doc_path)
         for paragraph in paragraphs:
             if len(paragraph) <=50:
                 story.append(Paragraph(paragraph,title_style))

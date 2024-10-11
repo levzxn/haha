@@ -13,7 +13,8 @@ from uuid import UUID
 router = APIRouter(prefix='/docs',tags=['docs'])
 
 
-UPLOAD_DIR = "fast_zero/uploads"
+UPLOAD_DIR = "fast_zero/files/uploads"
+OUTPUT_DIR = "fast_zero/files/pdfs"
 
 @router.post("/uploadfile/", status_code=HTTPStatus.OK,response_model=DocumentOut)
 async def upload_file(titulo:str=Form(...),file: UploadFile = File(...),current_user: User = Depends(get_current_user)):
@@ -64,10 +65,15 @@ async def get_all_user_documents(current_user: User = Depends(get_current_user))
 
 @router.get('/gerar_diario/')
 async def gerar_diario(doc_ids:List[UUID]=Query(...)):
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+    file_path = os.path.join(OUTPUT_DIR,'DOEM 1.pdf')
+
     try:
         documents = [await Document.get(id=str(id)) for id in doc_ids]
-        create_pdf([document.file_path for document in documents],'TesteDOC.pdf')
-        with open('TesteDoc.pdf','rb') as stored_file:
+        create_pdf([document.file_path for document in documents],file_path)
+        with open(file_path,'rb') as stored_file:
             content = stored_file.read()
             encoded_content = base64.b64encode(content).decode("utf-8")
         return {'content':encoded_content}

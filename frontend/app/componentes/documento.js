@@ -2,7 +2,7 @@
 import { useState } from "react";
 import ModalDocumento from "./modalDocumento";
 
-export default function Documento({ dados }) {
+export default function Documento(dados) {
     const [modalAberta, setModalAberta] = useState(false);
 
     function exibirDocumento() {
