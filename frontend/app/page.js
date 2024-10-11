@@ -33,7 +33,7 @@ export default function Home() {
         throw new Error('Ocorreu um erro inesperado. Tente novamente.')
       }
       const json = await conexao.json()
-      const token = json.acess_token
+      const token = json.access_token
       Cookies.set('auth-token', token)
       router.push('/logado')
     }

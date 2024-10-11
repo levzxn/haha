@@ -48,11 +48,11 @@ async def update_user(user_id:int,updated_user:UserIn,current_user: T_User):
     await current_user.save()
     return current_user
 
-@router.delete('/{user_id}',status_code=HTTPStatus.OK)
+@router.delete('/{user_id}',status_code=HTTPStatus.OK,response_model=UserOut)
 async def delete_user(user_id:int,current_user: T_User) :
     if current_user.id != user_id:
         raise HTTPException(
             status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions'
         )
     await current_user.delete()
-    return {"user_deleted":current_user.username}   
+    return current_user   
