@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 from datetime import datetime
 from uuid import UUID
 
@@ -35,3 +35,10 @@ class TokenData(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token: str
+
+class EmailIn(BaseModel):
+    email_adress: EmailStr
+
+class EmailOut(BaseModel):
+    email:EmailStr
+    subject:str

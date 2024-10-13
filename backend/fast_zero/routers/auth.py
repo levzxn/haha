@@ -2,11 +2,13 @@ from fastapi.routing import APIRouter
 from fastapi import Depends,HTTPException,BackgroundTasks
 from fastapi.security import OAuth2PasswordRequestForm
 from fast_zero.models import User
-from fast_zero.schemas import RefreshToken
+from fast_zero.schemas import RefreshToken,EmailIn,EmailOut
 from fast_zero.security import verify_password,create_access_token,create_refresh_token,decode_refresh_token
+from fast_zero.routers.users import T_User
 from http import HTTPStatus
 from typing import Annotated
 from tortoise.exceptions import DoesNotExist
+import requests
 
 router = APIRouter(prefix='/auth',tags=['auth'])
 
@@ -48,3 +50,9 @@ async def refresh_access_token(refresh_token: RefreshToken):
         "refresh_token": new_refresh_token,  
         "token_type": "bearer"
     }
+
+@router.post("/forgot_my_password")
+async def send_change_password_email(email:EmailIn,current_user=T_User):
+    email = EmailOut(email=email.email_adress,subject='Recuperação de Senha')
+    response = requests.post(url='http://127.0.0.1:8001/email/send', json=email.model_dump())
+    return response.json()
