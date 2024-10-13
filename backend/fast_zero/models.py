@@ -32,7 +32,7 @@ class Estabelecimento(Model):
 
 class Orgao(Model):
     id = fields.UUIDField(primary_key=True)
-    estabelecimento = fields.ForeignKeyField('models.Estabelecimento',related_name='orgaos',on_delete=fields.OnDelete.CASCADE)
+    estabelecimento = fields.ForeignKeyField('models.Estabelecimento',on_delete=fields.OnDelete.CASCADE)
     descricao = fields.CharField(max_length=200)
     cnpj = fields.CharField(max_length=11)
     endereco = fields.CharField(max_length=150)
@@ -58,4 +58,4 @@ class DiarioOficial(Model):
     published_at = fields.DatetimeField(null=True)
     is_published = fields.BooleanField(default=False)
     signed = fields.BooleanField(default=False)
-    sender = fields.ForeignKeyField('models.User',related_name='user',on_delete=fields.OnDelete.CASCADE)
+    sender = fields.ForeignKeyField('models.User',on_delete=fields.OnDelete.CASCADE)
