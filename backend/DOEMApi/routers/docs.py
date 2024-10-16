@@ -1,10 +1,10 @@
 from fastapi.routing import APIRouter
 from fastapi import UploadFile,File,Form,Depends,Query,HTTPException,Request
 from http import HTTPStatus 
-from fast_zero.models import Document,DiarioOficial
-from fast_zero.security import get_current_user
-from fast_zero.schemas import DocumentOut,UserOut
-from fast_zero.pdf_controller import create_pdf
+from DOEMApi.models import Document,DiarioOficial
+from DOEMApi.security import get_current_user
+from DOEMApi.schemas import DocumentOut,UserOut
+from DOEMApi.pdf_controller import create_pdf
 import os,shutil,base64
 from typing import List
 from tortoise.exceptions import DoesNotExist
@@ -64,9 +64,9 @@ async def get_all_user_documents(request:Request):
             detail='Não foi encontrado documentos desse usuário'
         )
 
-
+Tdoc_ids = Annotated[List[UUID],Query(...)]
 @router.get('/gerar_diario/')
-async def gerar_diario(doc_ids:List[UUID]=Query(...)):
+async def gerar_diario(doc_ids:Tdoc_ids):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 

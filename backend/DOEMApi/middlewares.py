@@ -1,7 +1,7 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 from fastapi import Request
-from fast_zero.security import get_current_user
+from DOEMApi.security import get_current_user
 
 
 class AuthMiddleware(BaseHTTPMiddleware):

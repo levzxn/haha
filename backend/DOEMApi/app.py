@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fast_zero.routers import docs
-from fast_zero.middlewares import AuthMiddleware
+from DOEMApi.routers import docs
+from DOEMApi.middlewares import AuthMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi import FastAPI, Request
 
@@ -24,7 +24,7 @@ app.include_router(docs.router)
 register_tortoise(
     app,
     db_url="postgres://postgres:Lucasfr420@localhost:5432/DOEM",
-    modules={'models': ['fast_zero.models']},
+    modules={'models': ['DOEMApi.models']},
     generate_schemas=True
 )
 
