@@ -1,23 +1,23 @@
 from fastapi.routing import APIRouter
-from fastapi import UploadFile,File,Form,Depends,Query,HTTPException
+from fastapi import UploadFile,File,Form,Depends,Query,HTTPException,Request
 from http import HTTPStatus 
-from fast_zero.models import Document,DiarioOficial,User
+from fast_zero.models import Document,DiarioOficial
 from fast_zero.security import get_current_user
-from fast_zero.schemas import DocumentOut
+from fast_zero.schemas import DocumentOut,UserOut
 from fast_zero.pdf_controller import create_pdf
 import os,shutil,base64
 from typing import List
 from tortoise.exceptions import DoesNotExist
 from uuid import UUID
+from typing import Annotated
 
 router = APIRouter(prefix='/docs',tags=['docs'])
-
 
 UPLOAD_DIR = "fast_zero/files/uploads"
 OUTPUT_DIR = "fast_zero/files/pdfs"
 
 @router.post("/uploadfile/", status_code=HTTPStatus.OK,response_model=DocumentOut)
-async def upload_file(titulo:str=Form(...),file: UploadFile = File(...),current_user: User = Depends(get_current_user)):
+async def upload_file(request:Request,titulo:str=Form(...),file: UploadFile = File(...),orgao_id:UUID=Form(...)):
     if not os.path.exists(UPLOAD_DIR):
         os.makedirs(UPLOAD_DIR)
     
@@ -27,9 +27,10 @@ async def upload_file(titulo:str=Form(...),file: UploadFile = File(...),current_
             f.write(await file.read()) 
     except Exception as e:
         return HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, content={"error": f"Erro ao salvar o arquivo: {str(e)}"})
-
-    document = await Document.create(file_name=titulo,file_path=file_path,sender=current_user)
     
+    user_data = await request.state.user
+    current_user = UserOut(**user_data)
+    document = await Document.create(file_name=titulo,file_path=file_path,sender=current_user.id,orgao=orgao_id,tipo='Portaria')
     return document
 
 @router.get('/file/{doc_id}/',status_code=HTTPStatus.OK)
@@ -52,9 +53,10 @@ async def get_document_content(doc_id:str):
         )
 
 @router.get('/all/',status_code=HTTPStatus.ACCEPTED,response_model=List[DocumentOut])
-async def get_all_user_documents(current_user: User = Depends(get_current_user)):
+async def get_all_user_documents(request:Request):
     try:
-        documents = await Document.filter(sender=current_user).select_related('sender')
+        current_user = request.state.user
+        documents = await Document.filter(sender=current_user.get('id'))
         return documents
     except DoesNotExist:
         raise HTTPException(
@@ -87,3 +89,9 @@ async def gerar_diario(doc_ids:List[UUID]=Query(...)):
                 status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
                 detail=f'Não foi possível processar o arquivo: {e}'
             )
+    
+
+@router.get("/teste/", status_code=HTTPStatus.OK)
+async def teste(request:Request):
+    user = await request.state.user
+    return user

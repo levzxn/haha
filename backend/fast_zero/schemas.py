@@ -1,6 +1,14 @@
 from pydantic import BaseModel,EmailStr
 from datetime import datetime
 from uuid import UUID
+from typing import Optional
+
+
+class EstabelecimentoOut(BaseModel):
+    nome:str
+    icone_path:Optional[str]
+    pacote_id:UUID
+    cidade:str
 
 class UserIn(BaseModel):
     username:str
@@ -12,6 +20,7 @@ class UserOut(BaseModel):
     username:str
     email:str
     created_at:datetime
+    estabelecimento:EstabelecimentoOut
     
     class Config:
         orm_mode = True
@@ -24,7 +33,7 @@ class DocumentOut(BaseModel):
     id: UUID
     file_name:str
     file_path:str
-    sender:UserOut
+    sender:UUID
     uploaded_at:datetime
 
     class Config:

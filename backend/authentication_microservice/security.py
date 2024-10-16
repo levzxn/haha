@@ -2,8 +2,8 @@ from jwt import encode,decode,DecodeError, ExpiredSignatureError,PyJWTError
 from fastapi import Depends,HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from pwdlib import PasswordHash
-from fast_zero.models import User
-from fast_zero.schemas import TokenData
+from authentication_microservice.models import User
+from authentication_microservice.schemas import TokenData
 from http import HTTPStatus
 from datetime import datetime,timedelta
 from zoneinfo import ZoneInfo
