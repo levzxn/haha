@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from DOEMApi.routers import docs
+from DOEMApi.routers import docs,diario
 from DOEMApi.middlewares import AuthMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi import FastAPI, Request
@@ -19,7 +19,9 @@ app.add_middleware(
 
 )
 app.add_middleware(AuthMiddleware)
+
 app.include_router(docs.router)
+app.include_router(diario.router)
 
 register_tortoise(
     app,

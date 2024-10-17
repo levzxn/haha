@@ -35,6 +35,10 @@ requests = "^2.32.3"
 asyncpg = "^0.29.0"
 aerich = "^0.7.2"
 
+[tool.aerich]
+tortoise_orm = "DOEMApi.app.TORTOISE_ORM"
+location = "./DOEMApi/migrations"
+src_folder = "./."
 
 [build-system]
 requires = ["poetry-core"]

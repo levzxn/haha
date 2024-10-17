@@ -18,6 +18,7 @@ class DiarioOficial(Model):
     id = fields.UUIDField(primary_key=True)
     titulo = fields.CharField(max_length=50)
     file_path = fields.CharField(max_length=255)
+    chunks = fields.TextField()
     created_at = fields.DatetimeField(default=datetime.now)
     published_at = fields.DatetimeField(null=True)
     is_published = fields.BooleanField(default=False)

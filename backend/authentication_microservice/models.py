@@ -33,7 +33,7 @@ class Estabelecimento(Model):
 
 class Orgao(Model):
     id = fields.UUIDField(primary_key=True)
-    estabelecimento = fields.ForeignKeyField('models.Estabelecimento',related_name='estabelecimento_pertencente',on_delete=fields.OnDelete.CASCADE)
+    estabelecimento = fields.ForeignKeyField('models.Estabelecimento',related_name='orgaos',on_delete=fields.OnDelete.CASCADE)
     descricao = fields.CharField(max_length=200)
     cnpj = fields.CharField(max_length=11)
     endereco = fields.CharField(max_length=150)

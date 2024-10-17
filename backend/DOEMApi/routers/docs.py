@@ -2,7 +2,6 @@ from fastapi.routing import APIRouter
 from fastapi import UploadFile,File,Form,Depends,Query,HTTPException,Request
 from http import HTTPStatus 
 from DOEMApi.models import Document,DiarioOficial
-from DOEMApi.security import get_current_user
 from DOEMApi.schemas import DocumentOut,UserOut
 from DOEMApi.pdf_controller import create_pdf
 import os,shutil,base64
@@ -13,8 +12,8 @@ from typing import Annotated
 
 router = APIRouter(prefix='/docs',tags=['docs'])
 
-UPLOAD_DIR = "fast_zero/files/uploads"
-OUTPUT_DIR = "fast_zero/files/pdfs"
+UPLOAD_DIR = "files/uploads"
+
 
 @router.post("/uploadfile/", status_code=HTTPStatus.OK,response_model=DocumentOut)
 async def upload_file(request:Request,titulo:str=Form(...),file: UploadFile = File(...),orgao_id:UUID=Form(...)):
@@ -63,33 +62,6 @@ async def get_all_user_documents(request:Request):
             status_code=HTTPStatus.NOT_FOUND,
             detail='Não foi encontrado documentos desse usuário'
         )
-
-Tdoc_ids = Annotated[List[UUID],Query(...)]
-@router.get('/gerar_diario/')
-async def gerar_diario(doc_ids:Tdoc_ids):
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-
-    file_path = os.path.join(OUTPUT_DIR,'DOEM 1.pdf')
-
-    try:
-        documents = [await Document.get(id=str(id)) for id in doc_ids]
-        create_pdf([document.file_path for document in documents],file_path)
-        with open(file_path,'rb') as stored_file:
-            content = stored_file.read()
-            encoded_content = base64.b64encode(content).decode("utf-8")
-        return {'content':encoded_content}
-    except DoesNotExist:
-        raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail='ID de documento não encontrado'
-        )
-    except Exception as e:
-            raise HTTPException(
-                status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
-                detail=f'Não foi possível processar o arquivo: {e}'
-            )
-    
 
 @router.get("/teste/", status_code=HTTPStatus.OK)
 async def teste(request:Request):

@@ -13,7 +13,7 @@ async def create_orgao(o:OrgaoIn):
     try:
         estabelecimento = await Estabelecimento.get(id=o.estabelecimento_id)
         orgao = await Orgao.create(descricao=o.descricao,cnpj=o.cnpj,endereco=o.endereco,estabelecimento=estabelecimento)
-        await orgao
+        await orgao.fetch_related('estabelecimento')
         return orgao
     except DoesNotExist:
         raise HTTPException(
@@ -26,10 +26,11 @@ async def create_orgao(o:OrgaoIn):
             detail=f'Erro de servidor: {e}'
         )
     
-@router.get('/{id}')
+@router.get('/{id}',response_model=OrgaoOut)
 async def get_orgao(id:UUID):
     try:
         orgao = await Orgao.get(id=id)
+        await orgao.fetch_related('estabelecimento')
         return orgao
     except DoesNotExist:
         raise HTTPException(

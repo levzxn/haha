@@ -22,3 +22,4 @@ async def criar_estabelecimento(estabelecimento:EstabelecimentoIn):
             detail='Id do pacote não existe'
         )
 
+#@router.get('/{id}')
