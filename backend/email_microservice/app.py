@@ -42,6 +42,6 @@ async def send_email(to_email: str, subject: str, body: str):
 
 @app.post('/email/send')
 async def post_email(email:EmailSchema,background_tasks:BackgroundTasks):
-    background_tasks.add_task(send_email,email.email,email.subject, EmailTemplate())
+    background_tasks.add_task(send_email,email.email,email.subject, EmailTemplate(email.keys))
     return {'message':'Email enviado com sucesso!!!'}
 

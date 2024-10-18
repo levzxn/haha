@@ -63,7 +63,28 @@ async def get_all_user_documents(request:Request):
             detail='Não foi encontrado documentos desse usuário'
         )
 
-@router.get("/teste/", status_code=HTTPStatus.OK)
-async def teste(request:Request):
-    user = await request.state.user
-    return user
+@router.delete('/{id}')
+async def delete_document(request:Request,id:UUID):
+    user_data = await request.state.user
+    current_user = UserOut(**user_data)
+    try:
+        document = await Document.get(id=id)
+        document_id = document.id
+        if document.sender == current_user.id:
+            await document.delete()
+            return {'message':f'Documento de id {document_id} deletado com sucesso'}
+        else:
+            raise HTTPException(
+                status_code=HTTPStatus.METHOD_NOT_ALLOWED,
+                detail='Sem permissão para o método'
+            )
+    except DoesNotExist:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail='ID de documento não encontrado'
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+            detail=f'Não foi possivel processar o arquivo: {e}'
+        )   

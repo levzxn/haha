@@ -1,17 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 from uuid import UUID
 from datetime import datetime
-from typing import List
+from typing import List,Optional
 
-class UserIn(BaseModel):
-    username:str
-    email:str
-    password:str
-    estabelecimento:UUID
-
-    
-    class Config:
-        orm_mode = True
 
 class LoginSchema(BaseModel):
     username:str
@@ -29,6 +20,13 @@ class EstabelecimentoOut(BaseModel):
     pacote_id:UUID
     cidade:str
 
+class UserIn(BaseModel):
+    username:str
+    email:str
+    password:str
+    is_admin:Optional[bool]=False
+    estabelecimento:UUID
+
 class UserOut(BaseModel):
     id:UUID
     username:str
@@ -36,6 +34,12 @@ class UserOut(BaseModel):
     created_at:datetime
     is_admin:bool
     estabelecimento:EstabelecimentoOut
+
+class UptadedUser(BaseModel):
+    username:Optional[str] = None
+    email:Optional[str] = None
+    password:Optional[str] = None
+   
 
 class TokenData(BaseModel):
     username:str | None = None    
@@ -71,3 +75,13 @@ class OrgaoOut(BaseModel):
     endereco:str
     estabelecimento:EstabelecimentoOut
 
+class TokenResetIn(BaseModel):
+    token_id:UUID
+
+class EmailIn(BaseModel):
+    email_adress: EmailStr
+
+class EmailOut(BaseModel):
+    email: EmailStr
+    subject:str
+    keys:dict

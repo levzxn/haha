@@ -42,3 +42,4 @@ async def get_orgao(id:UUID):
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
             detail=f'Erro de servidor: {e}'
         )
+    

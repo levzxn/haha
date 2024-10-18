@@ -2,11 +2,11 @@ from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException,Depends
-from authentication_microservice.routers import estabelecimentos, users,auth,pacotes,orgaos
+from authentication_microservice.routers import estabelecimentos, users,auth,pacotes,orgaos,funcionalidades
 from authentication_microservice.schemas import UserIn,UserOut
 from authentication_microservice.models import User
 from authentication_microservice.security import get_password_hash,get_current_user
-from authentication_microservice.middlewares import TransactionMiddleware
+from authentication_microservice.middlewares import TransactionMiddleware,DeleteRequestMiddleware
 from http import HTTPStatus
 from tortoise.expressions import Q
 from typing import Annotated
@@ -24,6 +24,7 @@ app.add_middleware(
 
 )
 app.add_middleware(TransactionMiddleware)
+app.add_middleware(DeleteRequestMiddleware)
 
 register_tortoise(
     app,
@@ -40,4 +41,5 @@ app.include_router(users.router)
 app.include_router(auth.router)
 app.include_router(estabelecimentos.router)
 app.include_router(pacotes.router)
+app.include_router(funcionalidades.router)
 app.include_router(orgaos.router)

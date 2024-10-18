@@ -11,7 +11,7 @@ router = APIRouter(prefix='/pacote',tags=['pacotes'])
 
 @router.post('/',response_model=PacoteOut)
 async def create_pacote(request:Request,pacote:PacoteIn):
-    connection = request.state.db_connection
+    connection = request.state.connection
     try:
         p = await Pacote.create(using_db=connection)
         lista_funcs = [await Funcionalidade.get(id=func_id,using_db=connection) for func_id in pacote.func_ids]

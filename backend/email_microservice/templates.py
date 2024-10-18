@@ -46,7 +46,7 @@ TEMPLATE_PASSWORD_RESET = """
             color: #ffc107;
             font-weight: bold;
         }
-        .button {
+        .token {
             display: inline-block;
             padding: 12px 25px;
             background-color: #ffc107;
@@ -76,8 +76,8 @@ TEMPLATE_PASSWORD_RESET = """
         <div class="content">
             <p>Olá,</p>
             <p>Recebemos um pedido para redefinir a sua senha.</p>
-            <p>Para redefinir a sua senha, clique no botão abaixo:</p>
-            <a href="{{reset_link}}" class="button">Redefinir Senha</a>
+            <p>Para redefinir a sua senha, informe o token abaixo:</p>
+            <p class="token">{{token}}</p>
             <p class="highlight">Se você não solicitou a redefinição, ignore este e-mail.</p>
         </div>
 
@@ -96,7 +96,7 @@ def render_template(template_str, context):
     template = Template(template_str)
     return template.render(context)
 
-def EmailTemplate():
+def EmailTemplate(keys):
     template = Template(TEMPLATE_PASSWORD_RESET)
-    body = template.render({'reset_link':'http://www.google.com'})
+    body = template.render(keys)
     return body

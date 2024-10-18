@@ -19,7 +19,7 @@ Tdoc_ids = Annotated[List[UUID],Query(...)]
 async def gerar_diario(request:Request,doc_ids:Tdoc_ids):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
-    titulo= 'Diario Oficial dia tal'
+    titulo= 'Diario Oficial dia tal 1'
     file_path = os.path.join(OUTPUT_DIR,titulo+'.pdf')
 
     try:
@@ -58,3 +58,28 @@ async def get_diario(id:int):
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
             detail=f'Erro no servidor: {e}'
         )
+    
+@router.delete('/{id}')
+async def delete_diario(request:Request,id:int):
+    try:
+        current_user = request.state.user
+        if current_user.is_admin:
+            diario = await DiarioOficial.get(id=id)
+            diario_id = diario.id
+            await diario.delete()
+            return {'message':f'Diario de id {diario_id} deletado'}
+        else:
+            raise HTTPException(
+                status_code=HTTPStatus.METHOD_NOT_ALLOWED,
+                detail='Sem permissões para esse método'
+            )
+    except DoesNotExist:
+        raise HTTPException(
+            HTTPStatus.NOT_FOUND,
+            detail='Id de Diario não encontrado'
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+            detail=f'Erro de servidor: {e}'
+        )   

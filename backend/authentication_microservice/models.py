@@ -37,3 +37,9 @@ class Orgao(Model):
     descricao = fields.CharField(max_length=200)
     cnpj = fields.CharField(max_length=11)
     endereco = fields.CharField(max_length=150)
+
+class TokenReset(Model):
+    id = fields.UUIDField(primary_key=True)
+    created_at = fields.DatetimeField(default=datetime.now)
+    expires_at = fields.DatetimeField(default=datetime.now)
+    user = fields.OneToOneField('models.User')
